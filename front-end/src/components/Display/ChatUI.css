@@ -1,0 +1,132 @@
+.display-part {
+  min-height: 100vh;
+  display: flex;
+  background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 22%),
+    radial-gradient(circle at top right, rgba(165, 180, 252, 0.14), transparent 18%),
+    #0b1121;
+  color: #e2e8f0;
+}
+
+.left-bar {
+  width: 280px;
+  min-height: 100vh;
+  padding: 32px 22px;
+  background: rgba(15, 23, 42, 0.95);
+  border-right: 1px solid rgba(148, 163, 184, 0.14);
+  box-shadow: inset -4px 0 16px rgba(15, 23, 42, 0.4);
+}
+
+.new-chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  background: rgba(148, 163, 184, 0.06);
+  color: #f8fafc;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.new-chat:hover {
+  transform: translateY(-1px);
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.new-chat-icon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background: #38bdf8;
+  color: #0f172a;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+
+.history-panel {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-panel h2 {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+}
+
+.main-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 36px 40px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.subtitle {
+  margin: 0 0 12px;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+.selected-document-chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  min-width: 260px;
+}
+
+.selected-document-chip span {
+  color: #94a3b8;
+  font-size: 0.92rem;
+}
+
+.selected-document-chip strong {
+  color: #f8fafc;
+}
+
+.upload-sections,
+.chat-section {
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .display-part {
+    flex-direction: column;
+  }
+
+  .left-bar {
+    width: 100%;
+    min-height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .main-bar {
+    padding: 24px;
+  }
+}
