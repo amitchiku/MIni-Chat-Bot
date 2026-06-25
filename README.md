@@ -291,12 +291,14 @@ npm start
 ---
 
 👨‍💻 Author
-Amit Nayak
+Amit Nayak And Baibhab Moharan
 📧 Email: amitchiku2006@gmail.com
+📧 Email: baibhabamoharana19@gmail.com
 
-🔗 LinkedIn: https://www.linkedin.com/in/amit-nayak-0a9165238/
 
 🐙 GitHub: https://github.com/amitchiku
+🐙 GitHub: https://github.com/baibhab-19
+
 
 ### Skills
 
