@@ -8,6 +8,7 @@ function ChatUI({ onLogout }) {
   const [selectedPdfId, setSelectedPdfId] = useState(null);
   const [selectedPdfTitle, setSelectedPdfTitle] = useState('');
   const [chatResetKey, setChatResetKey] = useState(0);
+  const [pdfHistoryRefreshKey, setPdfHistoryRefreshKey] = useState(0);
 
   useEffect(() => {
     const savedId = localStorage.getItem('selectedPdfId');
@@ -16,7 +17,7 @@ function ChatUI({ onLogout }) {
     if (savedTitle) setSelectedPdfTitle(JSON.parse(savedTitle));
   }, []);
 
-  const handleNewChat = () => {
+  const handleDeleteChat = () => {
     localStorage.removeItem('selectedPdfId');
     localStorage.removeItem('documentTitle');
     setSelectedPdfId(null);
@@ -29,18 +30,19 @@ function ChatUI({ onLogout }) {
     setSelectedPdfTitle(title);
     localStorage.setItem('selectedPdfId', JSON.stringify(id));
     localStorage.setItem('documentTitle', JSON.stringify(title));
+    setPdfHistoryRefreshKey((prevKey) => prevKey + 1);
   };
 
   return (
     <div className="display-part">
       <aside className="left-bar">
-        <div className="new-chat" onClick={handleNewChat}>
-          <span className="new-chat-icon">+</span>
-          New Chat
+        <div className="new-chat" onClick={handleDeleteChat}>
+          <span className="new-chat-icon">×</span>
+          Delete Chat
         </div>
         <div className="history-panel">
           <h2>Uploaded Documents</h2>
-          <PdfHistory selectedPdfId={selectedPdfId} onSelectDocument={handleDocumentSelect} />
+          <PdfHistory selectedPdfId={selectedPdfId} onSelectDocument={handleDocumentSelect} refreshKey={pdfHistoryRefreshKey} />
         </div>
         <button className="logout-btn" onClick={onLogout} style={{ marginTop: 'auto', marginBottom: '10px' }}>
           Logout

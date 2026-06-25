@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import './FileUploader.css';
 
 function FileUploader({ onUploadSuccess }) {
@@ -27,7 +28,7 @@ function FileUploader({ onUploadSuccess }) {
 
   const handleUpload = async () => {
     if (!selectedFile && !textContent.trim()) {
-      alert('Please upload a file or enter text before submitting.');
+      toast.warn('Please upload a file or enter text before submitting.');
       return;
     }
 
@@ -44,13 +45,19 @@ function FileUploader({ onUploadSuccess }) {
       const response = await axios.post('http://localhost:8000/upload-pdf/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
+      if (response.data.warning) {
+        console.warn('Upload warning:', response.data.warning);
+        toast.warn('Document uploaded successfully. Note: ' + response.data.warning);
+      } else {
+        toast.success('Document uploaded successfully');
+      }
       onUploadSuccess(response.data.id, response.data.title);
       setSelectedFile(null);
       setTextContent('');
       setTitle(response.data.title || '');
     } catch (error) {
       console.error(error);
-      alert(error.response?.data?.message || 'Upload failed.');
+      toast.error(error.response?.data?.message || 'Upload failed.');
     }
   };
 

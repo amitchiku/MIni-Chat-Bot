@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import ChatUI from './components/Display/ChatUI';
 import Login from './components/Auth/Login';
@@ -53,6 +55,7 @@ function App() {
   return (
     <div className="app-shell">
       <ChatUI onLogout={handleLogout} />
+      <ToastContainer position="top-right" autoClose={4000} pauseOnHover />
     </div>
   );
 }

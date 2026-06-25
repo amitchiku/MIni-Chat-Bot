@@ -14,3 +14,5 @@ class PDFDocument(models.Model):
     # uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
     upload_date = models.DateTimeField(auto_now_add=True)
     embedding = models.TextField()
+
+

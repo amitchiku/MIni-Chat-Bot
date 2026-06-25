@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast } from 'react-toastify';
 import "./Register.css"; // Import your custom CSS for styling
 
 const Register = ({ onRegisterSuccess, onSwitchToLogin }) => {
@@ -21,7 +22,7 @@ const Register = ({ onRegisterSuccess, onSwitchToLogin }) => {
       );
       if (response.data.message === "User registered successfully") {
         console.log("Registration successful");
-        alert('Registration successful! Please log in with your credentials.');
+        toast.success('Registration successful! Please log in with your credentials.');
         onRegisterSuccess();
       }
     } catch (error) {

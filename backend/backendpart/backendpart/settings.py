@@ -12,22 +12,30 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p%34m8y_+hu!a()_v2*r0jryezq++dywu#ya-(rp&vgt1a3!o$'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-p%34m8y_+hu!a()_v2*r0jryezq++dywu#ya-(rp&vgt1a3!o$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY') or os.getenv('OPENAI_API_KEY')
+# Note: GEMINI_API_URL is no longer used. Endpoint is now built dynamically in code.
+# Google Gemini API endpoint: https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent
 
 # Application definition
 
@@ -99,12 +107,12 @@ WSGI_APPLICATION = 'backendpart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'chatbot_db',
-        'USER': 'root',
-        'PASSWORD': '2006',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
+        'NAME': os.getenv('DB_NAME', 'chatbot_db'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PASSWORD': os.getenv('DB_PASSWORD', '2006'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
 

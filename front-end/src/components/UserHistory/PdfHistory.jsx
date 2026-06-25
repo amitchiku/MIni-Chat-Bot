@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PdfHistory.css';
 
-function PdfHistory({ selectedPdfId, onSelectDocument }) {
+function PdfHistory({ selectedPdfId, onSelectDocument, refreshKey }) {
   const [pdfHistory, setPDFHistory] = useState([]);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function PdfHistory({ selectedPdfId, onSelectDocument }) {
       .catch((error) => {
         console.error('Error fetching PDF history:', error);
       });
-  }, []);
+  }, [refreshKey]);
 
   const handlePDFClick = (pdf) => {
     onSelectDocument(pdf.id, pdf.title);

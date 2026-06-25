@@ -11,4 +11,5 @@ urlpatterns = [
     path('ask-question/', AskQuestionView.as_view(), name='ask-question'),
     path('ask-question-withId/', AskQuestionViewWithPdfId.as_view(), name='ask-question-withId'),
     path('pdf-history/', PDFHistoryView.as_view(), name='pdf-history'),
+    path('test-gemini-api/', views.test_gemini_api, name='test-gemini-api'),
 ] 

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import './QuestionForm.css';
 
 function QuestionForm({ selectedPdfId, selectedPdfTitle, resetKey }) {
   const [question, setQuestion] = useState('');
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setHistory([]);
@@ -16,21 +18,28 @@ function QuestionForm({ selectedPdfId, selectedPdfTitle, resetKey }) {
       return;
     }
 
+    setLoading(true);
     try {
       const response = await axios.post('http://localhost:8000/ask-question/', {
         question: question.trim(),
         pdfId: selectedPdfId,
-      });
+      }, { timeout: 45000 });
 
       const newEntry = {
         question: question.trim(),
         answer: response.data.answer,
+        warning: response.data.warning || null,
       };
       setHistory((prevHistory) => [newEntry, ...prevHistory]);
       setQuestion('');
+      if (response.data.warning) {
+        toast.warn(response.data.warning);
+      }
     } catch (error) {
       console.error('Error submitting question:', error.response?.data || error.message);
-      alert(error.response?.data?.message || 'Failed to submit question.');
+      toast.error(error.response?.data?.message || 'Failed to submit question.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,8 +73,8 @@ function QuestionForm({ selectedPdfId, selectedPdfTitle, resetKey }) {
           className='question-box'
           rows={5}
         />
-        <button className='ask-btn' onClick={handleQuestionSubmit} disabled={!question.trim()}>
-          Ask
+        <button className='ask-btn' onClick={handleQuestionSubmit} disabled={!question.trim() || loading}>
+          {loading ? 'Asking…' : 'Ask'}
         </button>
       </div>
 
@@ -75,6 +84,7 @@ function QuestionForm({ selectedPdfId, selectedPdfTitle, resetKey }) {
           <div key={index} className='history-entry'>
             <p className='question'><span>Q:</span> {entry.question}</p>
             <p className='answer'><span>A:</span> {entry.answer}</p>
+            {entry.warning && <p className='warning'><span>⚠️</span> {entry.warning}</p>}
           </div>
         ))}
       </div>
